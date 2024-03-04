@@ -39,11 +39,11 @@ window.addEventListener("DOMContentLoaded", function() {
     if (v != 6) fractal(x, y, z + (r / 2) * (rl + 1), r * rl, l + 1, 5);
   })(0, 0, 0, 256, 0, 0);
 
-  Array.from({length:n+1}).map((_,i) => 
-    gui.add({[`group_${i}`]:true}, `group_${i}`).onChange(val => 
-      spheres.forEach((s) => {if(i == s.id)s.visibility = val})
+  for(let i = 1; i <= n+1; i++){
+    gui.add({[`group_${i}`]:true}, `group_${i}`).onChange(
+      v => spheres.filter(s => i == s.id).forEach(s => s.visibility = v)
     )
-  )
+  }
 
   engine.runRenderLoop(() => scene.render());
   window.addEventListener("resize",()=>  engine.resize());
